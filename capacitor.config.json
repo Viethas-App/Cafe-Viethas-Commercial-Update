@@ -1,0 +1,21 @@
+{
+  "appId": "com.viethas.food",
+  "appName": "Cafe Viethas",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/Cafe-Viethas",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1000
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_name",
+      "iconColor": "#00A859"
+    },
+    "Keyboard": {
+      "resize": "none",
+      "style": "light"
+    }
+  },
+  "cordova": {}
+}
