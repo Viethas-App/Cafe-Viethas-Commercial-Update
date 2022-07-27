@@ -1,7 +1,7 @@
 {
   "name": "Cafe-Viethas",
   "description": "A Cafe App from Viethas",
-  "version": "1.0.6",
+  "version": "1.1.6",
   "main": "./build/index.js",
   "repository": {
     "type": "git",
@@ -11,12 +11,14 @@
     "start": "electron .",
     "build": "tsc",
     "publish": "source ~/.zshenv && npm run build && electron-builder build --windows --mac --linux --ia32 --x64 --publish always",
+    "bui": "source ~/.zshenv && npm run build && electron-builder build --windows --mac --linux --ia32 --x64",
     "electron:start": "npm run build && electron ./",
     "electron:pack": "npm run build && electron-builder build --dir",
     "electron:build-windows-32": "npm run build && electron-builder build --windows --ia32",
     "electron:build-windows-64": "npm run build && electron-builder build --windows --x64",
     "electron:build-mac": "npm run build && electron-builder build --mac",
-    "electron:build-linux": "npm run build && electron-builder build --linux --x64"
+    "electron:build-linux": "npm run build && electron-builder build --linux --x64",
+    "mac": "npm run build && electron-builder build --mac"
   },
   "dependencies": {
     "@capacitor-community/electron": "^1.3.1",
@@ -25,8 +27,8 @@
     "electron-updater": "4.3.9"
   },
   "devDependencies": {
-    "electron": "10.4.6",
-    "electron-builder": "22.9.1",
+    "electron": "10.4.7",
+    "electron-builder": "^23.1.0",
     "typescript": "~4.0.5"
   },
   "keywords": [
@@ -51,13 +53,19 @@
       "app/**"
     ],
     "mac": {
+      "asarUnpack": "**/*.node",
       "artifactName": "${productName}-${version}-mac.${ext}",
       "category": "public.app-category.developer-tools",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "./build/entitlements.mac.plist",
+      "entitlementsInherit": "./build/entitlements.mac.plist",
       "target": [
         "dmg",
         "zip"
       ],
-      "icon": "./assets/appIcon.png"
+      "icon": "./assets/appIcon.png",
+      "provisioningProfile": "./4286cfff-73e9-4a9a-9c3a-46e5bf2502ff.provisionprofile"
     },
     "win": {
       "artifactName": "${productName}-${version}-windows-${arch}.${ext}",
@@ -68,6 +76,10 @@
       "artifactName": "${productName}-${version}-linux-${arch}.${ext}",
       "target": "AppImage",
       "icon": "./assets/appIcon.png"
-    }
+    },
+    "dmg": {
+      "sign": false
+    },
+    "afterSign": "scripts/notarize.js"
   }
 }

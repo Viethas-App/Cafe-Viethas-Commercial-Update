@@ -122,6 +122,7 @@ function initPrintEvent() { // khởi tạo sự kiện in
     const options = {
       silent: true,
       deviceName: printer.deviceName,
+      copies:printer.copies
     }
     print.webContents.print(options, (success, errorType) => {
       if (!success) myCapacitorApp.getMainWindow().webContents.send('print-done', false); // gửi sự kiện lên angular nếu in lỗi
